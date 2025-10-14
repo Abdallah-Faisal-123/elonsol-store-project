@@ -1,0 +1,38 @@
+body {
+  font-family: "prompt";
+}
+
+h1 {
+  width: fit-content;
+  margin-inline: auto;
+  font-family: "bebas neue";
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+  border-color: darkcyan !important;
+}
+
+div.img-container {
+  height: 150px;
+  overflow: hidden;
+}
+
+.fa-trash-can:hover {
+  animation: fa-shake 2s 1 linear;
+}
+
+.form-control.is-valid:focus,
+.form-select.is-valid:focus {
+  box-shadow: none;
+  border-color: green !important;
+  border-width: 3px !important;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+  box-shadow: none;
+  border-color: red !important;
+  border-width: 3px !important;
+}
