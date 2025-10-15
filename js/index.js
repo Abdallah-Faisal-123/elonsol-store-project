@@ -5,8 +5,9 @@ var productcategoryinput = document.getElementById("productcategory");
 var productdescriptioninput = document.getElementById("productdescription");
 var productimageinput = document.getElementById("productimage");
 var containerelement = document.getElementById("containerelement");
+var addBtn = document.getElementById("addBtn");
 var productlist = []
-
+var editIndex = -1;
 
 if (localStorage.getItem("productlist")) {
     productlist = JSON.parse(localStorage.getItem("productlist"));
@@ -14,15 +15,43 @@ if (localStorage.getItem("productlist")) {
 }
 
 function addproduct() {
+
+     var imageName = productimageinput.files[0]
+    ? productimageinput.files[0].name
+    : (editIndex !== -1 ? productlist[editIndex].productimage : "");
+
     var product =
     {
         productname: productNameinput.value,
         productprice: productpriceinput.value,
         productcategory: productcategoryinput.value,
         productdescription: productdescriptioninput.value,
-        productimage: productimageinput.files[0].name
+        productimage: imageName
     }
+
+   
+
+    if (
+    !productNameinput.value ||
+    !productpriceinput.value ||
+     productcategoryinput.value === 0||
+    !productdescriptioninput.value 
+    
+        )
+  {
+    alert("You Can't Left Any Empty Data");
+    return;
+  }
+
+  if (editIndex !== -1) {
+    productlist[editIndex] = product;
+    editIndex = -1;
+    addBtn.textContent = "Add Product";
+  } else {
     productlist.push(product)
+  }
+ 
+   
 
     localStorage.setItem("productlist", JSON.stringify(productlist))
 
@@ -30,7 +59,7 @@ function addproduct() {
 
     resetallinputs()
 
-
+     
 
     
 }
@@ -60,7 +89,7 @@ function display(targetList)
                         <p class="fw-semibold">${targetList[i].productprice} EGP</p>
                         <div>
                             <i onclick ="deleteproduct(${i})" class="fa-solid fa-trash-can fs-5 text-danger"></i>
-                            <i class="fa-solid fa-pen-to-square fs-5 text-success"></i>
+                            <i onclick = "editProduct(${i})" class="fa-solid fa-pen-to-square fs-5 text-success"></i>
                         </div>
                     </div>
                 </div>
@@ -74,6 +103,19 @@ function deleteproduct(deleteindex) {
     productlist.splice(deleteindex, 1)
     localStorage.setItem("productlist", JSON.stringify(productlist))
     display(productlist)
+}
+
+function editProduct(i) {
+  var product = productlist[i];
+
+  productNameinput.value = product.productname;
+  productpriceinput.value = product.productprice;
+  productcategoryinput.value = product.productcategory;
+  productdescriptioninput.value = product.productdescription;
+
+
+  editIndex = i;
+  addBtn.textContent = "Update Product";
 }
 
 
