@@ -16,9 +16,9 @@ if (localStorage.getItem("productlist")) {
 
 function addproduct() {
 
-     var imageName = productimageinput.files[0]
-    ? productimageinput.files[0].name
-    : (editIndex !== -1 ? productlist[editIndex].productimage : "");
+    var imageName = productimageinput.files[0]
+        ? productimageinput.files[0].name
+        : (editIndex !== -1 ? productlist[editIndex].productimage : "");
 
     var product =
     {
@@ -29,29 +29,28 @@ function addproduct() {
         productimage: imageName
     }
 
-   
+
 
     if (
-    !productNameinput.value ||
-    !productpriceinput.value ||
-     productcategoryinput.value === 0||
-    !productdescriptioninput.value 
-    
-        )
-  {
-    alert("You Can't Left Any Empty Data");
-    return;
-  }
+        !productNameinput.value ||
+        !productpriceinput.value ||
+        productcategoryinput.value === 0 ||
+        !productdescriptioninput.value
 
-  if (editIndex !== -1) {
-    productlist[editIndex] = product;
-    editIndex = -1;
-    addBtn.textContent = "Add Product";
-  } else {
-    productlist.push(product)
-  }
- 
-   
+    ) {
+        alert("You Can't Left Any Empty Data");
+        return;
+    }
+
+    if (editIndex !== -1) {
+        productlist[editIndex] = product;
+        editIndex = -1;
+        addBtn.textContent = "Add Product";
+    } else {
+        productlist.push(product)
+    }
+
+
 
     localStorage.setItem("productlist", JSON.stringify(productlist))
 
@@ -59,9 +58,9 @@ function addproduct() {
 
     resetallinputs()
 
-     
 
-    
+
+
 }
 
 function resetallinputs() {
@@ -73,8 +72,7 @@ function resetallinputs() {
 }
 
 
-function display(targetList)
- {
+function display(targetList) {
     var productstr = ``;
     for (var i = 0; i < targetList.length; i++) {
         productstr += `<div class="col">
@@ -106,16 +104,16 @@ function deleteproduct(deleteindex) {
 }
 
 function editProduct(i) {
-  var product = productlist[i];
+    var product = productlist[i];
 
-  productNameinput.value = product.productname;
-  productpriceinput.value = product.productprice;
-  productcategoryinput.value = product.productcategory;
-  productdescriptioninput.value = product.productdescription;
+    productNameinput.value = product.productname;
+    productpriceinput.value = product.productprice;
+    productcategoryinput.value = product.productcategory;
+    productdescriptioninput.value = product.productdescription;
 
 
-  editIndex = i;
-  addBtn.textContent = "Update Product";
+    editIndex = i;
+    addBtn.textContent = "Update Product";
 }
 
 
@@ -126,9 +124,9 @@ function searchbyproductname(searchvalue) {
     for (var i = 0; i < productlist.length; i++) {
         if (productlist[i].productname.toLowerCase().includes(searchvalue.toLowerCase())) {
             filter.push(productlist[i]);
-            
+
         }
     }
-    display(filter  )
+    display(filter)
 }
 
