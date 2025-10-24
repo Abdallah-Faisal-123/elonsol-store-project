@@ -36,3 +36,7 @@ div.img-container {
   border-color: red !important;
   border-width: 3px !important;
 }
+
+.form-floating .text{
+  display: none;
+}

@@ -20,15 +20,17 @@
 
     <div class="w-75 my-5 mx-auto">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control border-0 border-bottom rounded-0 " id="productname" placeholder="Product Name">
+            <input type="text" oninput="!validateInputsRegex()" class=" inputs form-control border-0 border-bottom rounded-0 " id="productname" placeholder="Product Name">
             <label for="productname">Product Name</label>
+            <p class="text-danger  text" >you must write a Arabic or English Word 2 leters at leatest </p>
         </div>
          <div class="form-floating mb-3">
-            <input type="number" class="form-control border-0 border-bottom rounded-0 " id="productprice" placeholder="Product Name">
+            <input type="number" oninput="!validateInputsRegex()" class=" inputs form-control border-0 border-bottom rounded-0 " id="productprice" placeholder="Product Name">
             <label for="productprice">Product Price</label>
+             <p class="text-danger  text" >you must write valid price starts from 20 EGP  </p>
         </div>
         <div class="form-floating">
-        <select class="form-select border-0 border-bottom rounded-0" id="productcategory" aria-label="Floating label select example">
+        <select class="  form-select border-0 border-bottom rounded-0" id="productcategory" aria-label="Floating label select example">
             <option selected disabled hidden >Chose Product Category</option>
             <option >Mobile Phone</option>
             <option >Labtop</option>
@@ -42,19 +44,20 @@
         <label for="productcategory">Product Category</label>
         </div>
         <div class="form-floating mb-3 my-3">
-            <textarea  class="form-control border-0 border-bottom rounded-0 " id="productdescription" placeholder="Product Description"></textarea>
+            <textarea oninput="!validateInputsRegex()" class=" inputs form-control border-0 border-bottom rounded-0 " id="productdescription" placeholder="Product Description"></textarea>
             <label for="productdescription">Product Description</label>
-            
-        </div>
+             <p class="text-danger  text" >you must write a Arabic or English Word 5 leters at leatest </p>
+             
+            </div>
          <div class="form-floating mb-3">
-            <input type="file" class="form-control border-0 border-bottom rounded-0 " id="productimage" placeholder="Product Name">
+            <input type="file" class=" inputs form-control border-0 border-bottom rounded-0 " id="productimage" placeholder="Product Name">
             <label for="productimage">Product Image</label>
         </div>
         <button id="addBtn" onclick="addproduct()" class="btn text-light btn-info mt-3">Add Product</button>
     </div>
 
     <div class="container my-5">
-        <input oninput="searchbyproductname(this.value)" class="form-control my-5" placeholder="Search By Product Name....." type="  search">
+        <input oninput="searchbyproductname(this.value)" class="  form-control my-5" placeholder="Search By Product Name....." type="  search">
         <div id="containerelement" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-5">
             
         </div>

@@ -9,6 +9,8 @@ var addBtn = document.getElementById("addBtn");
 var productlist = []
 var editIndex = -1;
 
+
+
 if (localStorage.getItem("productlist")) {
     productlist = JSON.parse(localStorage.getItem("productlist"));
     display(productlist)
@@ -16,6 +18,7 @@ if (localStorage.getItem("productlist")) {
 
 function addproduct() {
 
+    if (!validateInputsRegex()) return;
     var imageName = productimageinput.files[0]
         ? productimageinput.files[0].name
         : (editIndex !== -1 ? productlist[editIndex].productimage : "");
@@ -34,11 +37,22 @@ function addproduct() {
     if (
         !productNameinput.value ||
         !productpriceinput.value ||
-        productcategoryinput.value === 0 ||
+        !productcategoryinput.value ||
         !productdescriptioninput.value
 
     ) {
-        alert("You Can't Left Any Empty Data");
+        var inputs = document.querySelectorAll(".inputs");
+
+        inputs.forEach(function (input) {
+            if (!input.value) {
+                input.classList.add("is-invalid");
+                input.classList.remove("is-valid");
+
+            } else {
+                input.classList.add("is-valid");
+                input.classList.remove("is-invalid");
+            }
+        });
         return;
     }
 
@@ -69,6 +83,18 @@ function resetallinputs() {
         productcategoryinput.selected = true,
         productdescriptioninput.value = null,
         productimageinput.value = null
+
+    var inputs = document.querySelectorAll(".inputs");
+    inputs.forEach(function (input) {
+        if (!input.value) {
+            input.classList.remove("is-invalid");
+            input.classList.remove("is-valid");
+        } else {
+            input.classList.remove("is-valid");
+            input.classList.remove("is-invalid");
+        }
+    })
+
 }
 
 
@@ -116,7 +142,47 @@ function editProduct(i) {
     addBtn.textContent = "Update Product";
 }
 
+function validateInputsRegex() {
+    const patterns = {
+        name: /^[\p{L}0-9 _\-]{2,50}$/u,
+        price: /^(?:[2-9]\d|[1-9]\d{2,})$/,
+        category: /^(?!\s*$).+/,
+        description: /^.{5,500}$/,
+        image: /^[^\\\/:\*\?"<>\|]{1,255}\.(jpe?g|png|gif|webp|svg)$/i
+    };
 
+    let valid = true;
+
+    document.querySelectorAll(".inputs").forEach(input => {
+        let isValid = true;
+        const textMsg = input.closest(".form-floating").querySelector(".text");
+
+        if (input === productNameinput) {
+            isValid = patterns.name.test(input.value.trim());
+        } else if (input === productpriceinput) {
+            isValid = patterns.price.test(input.value.trim());
+        } else if (input === productcategoryinput) {
+            isValid = patterns.category.test(input.value.trim());
+        } else if (input === productdescriptioninput) {
+            isValid = patterns.description.test(input.value.trim());
+        } else if (input === productimageinput && input.files.length > 0) {
+            isValid = patterns.image.test(input.files[0].name);
+        }
+
+        if (!isValid) {
+            input.classList.add("is-invalid");
+            input.classList.remove("is-valid");
+            if (textMsg) textMsg.classList.add("d-block");
+            valid = false;
+        } else {
+            input.classList.remove("is-invalid");
+            input.classList.add("is-valid");
+            if (textMsg) textMsg.classList.remove("d-block");
+        }
+    });
+
+    return valid;
+}
 
 function searchbyproductname(searchvalue) {
     var filter = []
